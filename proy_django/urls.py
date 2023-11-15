@@ -17,19 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 from certifications import views
 
 router = routers.DefaultRouter()
 router.register(r'estudiantes', views.EstudianteView)
 router.register(r'profes', views.ProfesorView)
-router.register(r'certifications', views.CertificationsView)
+router.register(r'certifications', views.CertificationView)
+router.register(r'acta', views.ActaView)
+router.register(r'solicitudes', views.SolicitudView)
+router.register(r'jurado', views.JuradoView)
 router.register(r'hago_constar', views.Hago_ConstarView)
-router.register(r'solicitudes', views.SolicitudesView)
+
 
 urlpatterns = [
-    path('',include(router.urls)),
+    path('', include('main_app.urls')),
+    path('certification/',include(router.urls)),
+    path('docs/', include_docs_urls(title= "CENID API")),
     path('admin/', admin.site.urls),
-    #path('api/v1/', include('rest_framework.urls', namespace='rest_framework') )
 ]
 
 
