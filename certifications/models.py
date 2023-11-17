@@ -4,14 +4,23 @@ from django.forms import ValidationError
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from main_app.admin import User
-from django.utils import timezone
+#from django.utils import timezone
 
 
 # Create your models here.
 class Estudiante(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
+    FACULTAD_CHOICES = [
+        ("Facultad 1","F1"),
+        ("Facultad  2", "F2"),
+        ("Facultad 3", "F3"),
+        ("Facultad 4", "F4"),
+        ("Facultad FTE", "FTE"),
+        ("Facultad CITEC", "CITEC"),
+    ]
+    #user = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
     year = models.CharField(max_length=4)
     group = models.CharField(max_length=10)
+    facultad = models.CharField(choices = FACULTAD_CHOICES, max_length=100, blank=True, null=True)
     name = models.CharField(max_length=15)
     second_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=35)
@@ -19,18 +28,19 @@ class Estudiante(models.Model):
     decano = models.CharField(max_length=150)
     career = models.CharField(max_length=150)
 
+
+
 class Profesor(models.Model):
     name_completo = models.CharField(max_length=150)
     facultad = models.PositiveIntegerField(default=0)
 
 class Certification(models.Model):
     date_close_sol = models.DateField()#Comienza la certificacion 1 dia despues
-    date_certification = models.DateField(default= datetime.date.today)
+    date_certification = models.DateField()
     date_speaking = models.DateField()
-    date_wiriting_reading_listening = models.DateField()
+    date_writing_reading_listening = models.DateField()
 
     def save(self, *args, **kwargs):
-        self.date_close_sol = Certification.objects.latest('date_certification').date_certification
         super().save(*args, **kwargs)
 
 class Acta(models.Model):
@@ -48,21 +58,15 @@ class Acta(models.Model):
     equivalent = models.CharField(max_length=35)
 
 class Solicitud(models.Model):
-    estudiante = models.ForeignKey(
-        Estudiante, on_delete=models.CASCADE, default=0)
-    certification = models.ForeignKey(
-        Certification, on_delete=models.CASCADE, default=0)
-    acta = models.ManyToManyField( Acta, blank=True)
-    date_has_solicitud = models.DateField()
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, default=0)
+    certification = models.ForeignKey(Certification, on_delete=models.CASCADE, default=0)
+    #acta = models.ManyToManyField( Acta, blank=True)
+    date_has_solicitud = models.DateField(auto_now=True)
 
     #Guardo la fecha de la solicitud con la fecha actual del sistema
     def clean(self):
         if self.date_has_solicitud >= self.certification.date_close_sol:
             raise ValidationError("La solicitud realizada debe ser hecha antes de la fecha de cierre de las mismas")
-
-    def save(self, *args, **kwargs):
-        self.date_has_solicitud = timezone.now().date()
-        super().save(*args, **kwargs)
 
 class Jurado(models.Model):
     TIPO_TRIBUNAL_CHOICES = [
@@ -106,7 +110,7 @@ class Folio(models.Model):
 class Hago_Constar(models.Model):
     estudiante = models.OneToOneField(
         Estudiante, on_delete=models.CASCADE, default=0)
-    emision = models.DateField()
+    emision = models.DateField(auto_now=True)
     folio = models.ForeignKey(Folio, on_delete=models.CASCADE, null=True)
 
     def clean(self):

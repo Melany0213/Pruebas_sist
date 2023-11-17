@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from .serializer import CertificationSerializer, EstudianteSerializer, Hago_ConstarSerializer, ProfesorSerializer, SolicitudSerializer, ActaSerializer, JuradoSerializer, FolioSerializer
 from .models import Certification, Estudiante, Hago_Constar, Profesor, Solicitud, Acta, Jurado, Folio
-from rest_framework.permissions import IsAuthenticated
+#from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class EstudianteView(viewsets.ModelViewSet):

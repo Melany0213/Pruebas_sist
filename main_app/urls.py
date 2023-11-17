@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from main_app import views
 from dj_rest_auth.app_settings import api_settings
 from dj_rest_auth.views import (
-    LoginView, LogoutView, PasswordChangeView, PasswordResetConfirmView,
+    LogoutView, PasswordChangeView, PasswordResetConfirmView,
     PasswordResetView, UserDetailsView,
 )
 from django.urls import path, include
@@ -18,7 +18,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('password/reset/', PasswordResetView.as_view(), name='rest_password_reset'),
     path('password/reset/confirm/', PasswordResetConfirmView.as_view(), name='rest_password_reset_confirm'),
-    path('login/', LoginView.as_view(), name='rest_login'),
+    path('login/', views.LoginView.as_view(), name='rest_login'),
     # URLs that require a user to be logged in with a valid session / token.
     path('logout/', LogoutView.as_view(), name='rest_logout'),
     path('user/', UserDetailsView.as_view(), name='rest_user_details'),
