@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\Programación\Tutos para el Sistema\Sistema de gestión académica para el CENID en la UCI\Sist_certif\venv
+set VIRTUAL_ENV=D:\Programación\Tutos para el Sistema\Sistema de gestión académica para el CENID en la UCI\DashCode React-v1.0.1\Sistema Certificaciones\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

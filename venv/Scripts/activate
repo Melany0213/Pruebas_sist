@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Programación\Tutos para el Sistema\Sistema de gestión académica para el CENID en la UCI\Sist_certif\venv"
+VIRTUAL_ENV="D:\Programación\Tutos para el Sistema\Sistema de gestión académica para el CENID en la UCI\DashCode React-v1.0.1\Sistema Certificaciones\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
