@@ -16,6 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+SITE_ID = 1
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
